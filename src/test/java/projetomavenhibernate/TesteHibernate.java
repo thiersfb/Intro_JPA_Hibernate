@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Table;
+
 import org.junit.Test;
 
 import Model.UsuarioPessoa;
@@ -116,4 +118,23 @@ public class TesteHibernate {
 			System.out.println("-----------------------------");
 		}
 	}
+	
+	@Test
+	public void testeQueryList() {
+
+		DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
+		//List<UsuarioPessoa> list = daoGeneric.getEntityManager().createQuery(" from TBUsuario").getResultList();
+		//List<UsuarioPessoa> list = daoGeneric.getEntityManager().createQuery(" from UsuarioPessoa").getResultList();
+		
+		List<UsuarioPessoa> list = daoGeneric.getEntityManager().createQuery(" from " + UsuarioPessoa.class.getAnnotation(Table.class).name() + " where login = 'thiersfb' ").getResultList();
+
+		
+		for (UsuarioPessoa usuarioPessoa : list) {
+			System.out.println(usuarioPessoa);
+			System.out.println("-----------------------------");
+			
+		}
+		
+	}
+	
 }
