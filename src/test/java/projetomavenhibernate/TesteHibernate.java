@@ -92,5 +92,16 @@ public class TesteHibernate {
 		
 		System.out.println(pessoa);
 	}
-	
+
+	@Test
+	public void testeDelete() {
+		
+		DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
+		
+		UsuarioPessoa pessoa = daoGeneric.pesquisar(4L, UsuarioPessoa.class);
+		daoGeneric.excluirPorId(pessoa);
+		
+		//System.out.println(pessoa);
+	}
+
 }
