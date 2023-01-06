@@ -47,4 +47,50 @@ public class TesteHibernate {
 		
 	}
 	
+	@Test
+	public void testeBuscar() {
+		
+		DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
+		UsuarioPessoa pessoa = new UsuarioPessoa();
+		pessoa.setId(1L); //pesquisando id = 2
+		
+		pessoa = daoGeneric.pesquisar(pessoa);
+		
+		System.out.println(pessoa);
+	}
+	
+	
+	@Test
+	public void testeBuscar2() {
+		
+		DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
+		
+		UsuarioPessoa pessoa = daoGeneric.pesquisar(2L, UsuarioPessoa.class);
+		
+		System.out.println(pessoa);
+	}
+
+	@Test
+	public void testeUpdate() throws ParseException {
+		
+		DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
+		
+		UsuarioPessoa pessoa = daoGeneric.pesquisar(3L, UsuarioPessoa.class);
+		
+		pessoa.setNome("Nome atualizado hibernate");
+		pessoa.setSobrenome("Sobrenome atualizado hibernate");
+		pessoa.setEmail("teste@teste.com");
+		pessoa.setLogin("guest123");
+		pessoa.setSenha("guest456");
+
+		
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		Date dataNascimento = dateFormat.parse("29-02-1988");
+		pessoa.setDataNascimento(dataNascimento);
+		
+		pessoa = daoGeneric.updateMerge(pessoa);
+		
+		System.out.println(pessoa);
+	}
+	
 }
