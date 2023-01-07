@@ -21,32 +21,18 @@ public class TesteHibernate {
 		DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
 		
 		UsuarioPessoa pessoa = new UsuarioPessoa();
-		pessoa.setLogin("thiersfb");
-		pessoa.setNome("Thiers");
-		pessoa.setSobrenome("Barizon");
-		pessoa.setEmail("thiers.fb@gmail.com");
-		pessoa.setSenha("thiers07");
+		pessoa.setLogin("userTeste");
+		pessoa.setSenha("userTeste");
+		pessoa.setNome("User");
+		pessoa.setSobrenome("Teste");
+		pessoa.setEmail("teste@teste.com");
 		
 		
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-		Date dataNascimento = dateFormat.parse("29-02-1988");
+		Date dataNascimento = dateFormat.parse("02-02-2002");
 		pessoa.setDataNascimento(dataNascimento);
 		
 		daoGeneric.salvar(pessoa);
-		
-		UsuarioPessoa pessoa2 = new UsuarioPessoa();
-		pessoa2.setLogin("jupedro");
-		pessoa2.setNome("Juliana");
-		pessoa2.setSobrenome("Pedro");
-		pessoa2.setEmail("jupedro.08@hotmail.com");
-		pessoa2.setSenha("jupedroju");
-		
-		
-		//DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-		dataNascimento = dateFormat.parse("06-11-1985");
-		pessoa2.setDataNascimento(dataNascimento);
-		
-		daoGeneric.salvar(pessoa2);
 		
 	}
 	
@@ -101,7 +87,7 @@ public class TesteHibernate {
 		
 		DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
 		
-		UsuarioPessoa pessoa = daoGeneric.pesquisar(4L, UsuarioPessoa.class);
+		UsuarioPessoa pessoa = daoGeneric.pesquisar(6L, UsuarioPessoa.class);
 		daoGeneric.excluirPorId(pessoa);
 		
 	}
@@ -128,6 +114,25 @@ public class TesteHibernate {
 		
 		List<UsuarioPessoa> list = daoGeneric.getEntityManager().createQuery(" from " + UsuarioPessoa.class.getAnnotation(Table.class).name() + " where login = 'thiersfb' ").getResultList();
 
+		
+		for (UsuarioPessoa usuarioPessoa : list) {
+			System.out.println(usuarioPessoa);
+			System.out.println("-----------------------------");
+			
+		}
+		
+	}
+	
+
+	@Test
+	public void testeQueryListMaxResult() {
+
+		DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
+		
+		List<UsuarioPessoa> list = daoGeneric.getEntityManager().createQuery(" from "
+				+ UsuarioPessoa.class.getAnnotation(Table.class).name() + " where login != 'thiersfb' order by nome ")
+				.setMaxResults(5)	/* limita a quantia de registros encontrados */
+				.getResultList();
 		
 		for (UsuarioPessoa usuarioPessoa : list) {
 			System.out.println(usuarioPessoa);
