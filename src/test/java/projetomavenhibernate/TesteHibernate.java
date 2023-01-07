@@ -162,14 +162,39 @@ public class TesteHibernate {
 	
 	@Test
 	public void testeQuerySoma() {
-		
 		DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
-		
 		Long sumIDs = (Long) daoGeneric.getEntityManager().createQuery(" select sum(id) from " +  UsuarioPessoa.class.getAnnotation(Table.class).name())
 				.getSingleResult();
 		
 		System.out.println("Soma de todos os IDs: " + sumIDs);
 	}
 	
-	
+	@Test
+	public void testeNamedQuery() {
+		DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
+		List<UsuarioPessoa> list = daoGeneric.getEntityManager()
+				.createNamedQuery("UsuarioPessoa.findAll")
+				.getResultList();
+		
+		for (UsuarioPessoa usuarioPessoa : list) {
+			System.out.println(usuarioPessoa);
+			System.out.println("-----------------------------");
+			
+		}
+	}
+
+	@Test
+	public void testeNamedQueryFindByName() {
+		DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
+		List<UsuarioPessoa> list = daoGeneric.getEntityManager()
+				.createNamedQuery("UsuarioPessoa.findByName")
+				.setParameter("nome", "thiers")
+				.getResultList();
+		
+		for (UsuarioPessoa usuarioPessoa : list) {
+			System.out.println(usuarioPessoa);
+			System.out.println("-----------------------------");
+			
+		}
+	}
 }

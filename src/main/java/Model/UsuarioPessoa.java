@@ -6,10 +6,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity(name = "TBUsuario") 
 @Table(name = "TBUsuario") 
+@NamedQueries({
+	
+	@NamedQuery(name = "UsuarioPessoa.findAll", query = "select u from TBUsuario u "),
+	@NamedQuery(name = "UsuarioPessoa.findByName", query = "select u from TBUsuario u where u.nome = :nome")
+	
+})
 public class UsuarioPessoa {
 
 	@Id
