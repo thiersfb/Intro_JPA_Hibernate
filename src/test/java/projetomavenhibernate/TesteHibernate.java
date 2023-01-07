@@ -142,4 +142,23 @@ public class TesteHibernate {
 		
 	}
 	
+	@Test
+	public void testeQueryListParameter() {
+		
+		DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
+		
+		List<UsuarioPessoa> list = daoGeneric.getEntityManager()
+				.createQuery(" from " + UsuarioPessoa.class.getAnnotation(Table.class).name() + " where login != :login order by nome ") /* :param_name é a sintaxe de passagem por parâmetro na query*/
+				.setParameter("login", "thiersfb") /* nome do parâmetro seguindo do valor passado através do parâmetro; no exemplo o valor está fixo como "thiersfb */
+				.setMaxResults(5)	/* limita a quantia de registros encontrados */
+				.getResultList(); 
+		
+		for (UsuarioPessoa usuarioPessoa : list) {
+			System.out.println(usuarioPessoa);
+			System.out.println("-----------------------------");
+			
+		}
+	}
+	
+	
 }
