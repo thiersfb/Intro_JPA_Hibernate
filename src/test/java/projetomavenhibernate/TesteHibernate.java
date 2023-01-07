@@ -160,5 +160,16 @@ public class TesteHibernate {
 		}
 	}
 	
+	@Test
+	public void testeQuerySoma() {
+		
+		DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
+		
+		Long sumIDs = (Long) daoGeneric.getEntityManager().createQuery(" select sum(id) from " +  UsuarioPessoa.class.getAnnotation(Table.class).name())
+				.getSingleResult();
+		
+		System.out.println("Soma de todos os IDs: " + sumIDs);
+	}
+	
 	
 }
