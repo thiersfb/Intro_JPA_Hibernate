@@ -8,6 +8,7 @@
 	<persistence-unit name="projeto-maven-hibernate">
 		
 		<class>Model.UsuarioPessoa</class>
+		<class>Model.TelefoneUser</class>
 		
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>

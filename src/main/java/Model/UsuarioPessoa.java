@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity(name = "TBUsuario") 
@@ -32,6 +34,8 @@ public class UsuarioPessoa {
 	
 	private Date dataNascimento;
 	
+	@OneToMany(mappedBy = "usuarioPessoa")
+	private List<TelefoneUser> telefonesUser; 
 	
 	public Long getId() {
 		return id;
@@ -77,6 +81,15 @@ public class UsuarioPessoa {
 	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
+	
+	public List<TelefoneUser> getTelefonesUser() {
+		return telefonesUser;
+	}
+	public void setTelefonesUser(List<TelefoneUser> telefonesUser) {
+		this.telefonesUser = telefonesUser;
+	}
+	
+	
 	@Override
 	public String toString() {
 		return "UsuarioPessoa [id=" + id + ", nome=" + nome + ", sobrenome=" + sobrenome + ", email=" + email
