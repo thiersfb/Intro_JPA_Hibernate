@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,7 +35,7 @@ public class UsuarioPessoa {
 	
 	private Date dataNascimento;
 	
-	@OneToMany(mappedBy = "usuarioPessoa")
+	@OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
 	private List<TelefoneUser> telefonesUser; 
 	
 	public Long getId() {

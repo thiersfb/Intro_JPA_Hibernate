@@ -24,7 +24,7 @@ public class TelefoneUser {
 	private String numero;
 
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
-	private UsuarioPessoa usuarioPessoa;
+	private UsuarioPessoa usuario;
 
 	public Long getId() {
 		return id;
@@ -51,11 +51,11 @@ public class TelefoneUser {
 	}
 
 	public UsuarioPessoa getUsuarioPessoa() {
-		return usuarioPessoa;
+		return usuario;
 	}
 
-	public void setUsuarioPessoa(UsuarioPessoa usuarioPessoa) {
-		this.usuarioPessoa = usuarioPessoa;
+	public void setUsuarioPessoa(UsuarioPessoa usuario) {
+		this.usuario = usuario;
 	}
 
 }

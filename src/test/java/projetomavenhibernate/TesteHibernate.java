@@ -10,6 +10,7 @@ import javax.persistence.Table;
 
 import org.junit.Test;
 
+import Model.TelefoneUser;
 import Model.UsuarioPessoa;
 import dao.DaoGeneric;
 
@@ -197,4 +198,40 @@ public class TesteHibernate {
 			
 		}
 	}
+	
+	@Test
+	public void testeGravaTelefone() {
+		
+		DaoGeneric daoGeneric = new DaoGeneric();
+		UsuarioPessoa pessoa = (UsuarioPessoa) daoGeneric.pesquisar(1L, UsuarioPessoa.class);
+		
+		TelefoneUser telefoneUser = new TelefoneUser();
+		
+		telefoneUser.setTipo("fixo");
+		telefoneUser.setNumero("19938431550");
+		telefoneUser.setUsuarioPessoa(pessoa);
+		
+		daoGeneric.salvar(telefoneUser);
+		
+	}
+	
+	@Test
+	public void testeConsultaTelefones() {
+		
+		DaoGeneric daoGeneric = new DaoGeneric();
+		UsuarioPessoa pessoa = (UsuarioPessoa) daoGeneric.pesquisar(1L, UsuarioPessoa.class);
+		
+		for (TelefoneUser fone : pessoa.getTelefonesUser()) {
+			System.out.println("ID: " + fone.getId() + ", Numero: " + fone.getNumero() + ", Tipo: " + fone.getTipo()
+					+ ", Usuario: " + fone.getUsuarioPessoa().getNome() + " " + fone.getUsuarioPessoa().getSobrenome());
+			/*
+			 * System.out.println(fone.getTipo());
+			 * System.out.println(fone.getUsuarioPessoa().getNome());
+			 */
+			
+			System.out.println("----------------------------------------");
+		}
+		
+	}
+	
 }
