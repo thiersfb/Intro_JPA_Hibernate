@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+<h:head>
+
+</h:head>
+
+<h:body>
+
+	<h:form>
+		<p:breadCrumb>
+			<p:menuitem />
+			<p:menuitem value="Página JSF" action="index.jsf" />
+			<p:menuitem value="Página PrimeFaces" action="primefaces.jsf" />
+		</p:breadCrumb>
+	</h:form>
+
+	<h1>Endereços</h1>
+	<h:form id="formulario">
+
+		<!-- <h:messages showDetail="true" showSummary="false" id="msg" /> -->
+		<p:messages autoUpdate="true" showDetail="true" />
+		<br/>
+		<br/>
+		
+		
+		<!-- <h:outputText value="#{enderecoUsuarioPessoaManagedBean.usuario.nome}" /> -->
+		<p:panelGrid columns="2">
+			<h:column>
+				<h:outputLabel>ID do Usuario</h:outputLabel>
+			</h:column>
+			<h:column>
+				<h:outputText readonly="true" value="#{enderecoUsuarioPessoaManagedBean.usuario.id}" />
+			</h:column>
+			
+			<h:column>
+				<h:outputLabel>Nome do Usuario</h:outputLabel>
+			</h:column>
+			<h:column>
+				<h:outputText readonly="true" value="#{enderecoUsuarioPessoaManagedBean.usuario.nome}" />
+				<h:outputText value=" " />
+				<h:outputText value="#{enderecoUsuarioPessoaManagedBean.usuario.sobrenome}" />
+			</h:column>
+			
+			
+			
+			<h:column>
+				<h:outputLabel>ID</h:outputLabel>
+			</h:column>
+			<h:column>
+				<p:inputText value="#{enderecoUsuarioPessoaManagedBean.endereco.id}" readonly="true" />
+			</h:column>
+			
+			<h:column>
+				<h:outputLabel>CEP</h:outputLabel>
+			</h:column>
+			<h:column>
+				<p:inputText value="#{enderecoUsuarioPessoaManagedBean.endereco.cep}" 
+					id="cep"
+					onkeydown="return event.keyCode &gt;= 48 &amp;&amp; event.keyCode &lt;= 57 || event.keyCode == 8"
+					maxlength="8"
+					required="true" requiredMessage="Informe o CEP">
+					<f:ajax event="blur" execute="@this" render="txtLogradouro txtBairro txtCidade txtUf" 
+					listener="#{enderecoUsuarioPessoaManagedBean.pesquisaCep}" />
+				</p:inputText>
+			</h:column>
+			
+			<h:column>
+				<h:outputLabel>Logradouro</h:outputLabel>
+			</h:column>
+			<h:column>
+				<p:inputText value="#{enderecoUsuarioPessoaManagedBean.endereco.logradouro}" id="txtLogradouro" readonly="true"/>
+			</h:column>
+			
+			<h:column>
+				<h:outputLabel>Numero</h:outputLabel>
+			</h:column>
+			<h:column>
+				<p:inputText value="#{enderecoUsuarioPessoaManagedBean.endereco.numero}" required="true" requiredMessage="Informe o Número" />
+			</h:column>
+			
+			<h:column>
+				<h:outputLabel>Complemento</h:outputLabel>
+			</h:column>
+			<h:column>
+				<p:inputText value="#{enderecoUsuarioPessoaManagedBean.endereco.complemento}" />
+			</h:column>
+			
+			<h:column>
+				<h:outputLabel>Bairro</h:outputLabel>
+			</h:column>
+			<h:column>
+				<p:inputText value="#{enderecoUsuarioPessoaManagedBean.endereco.bairro}" id="txtBairro" readonly="true" />
+			</h:column>
+			
+			<h:column>
+				<h:outputLabel>Cidade</h:outputLabel>
+			</h:column>
+			<h:column>
+				<p:inputText value="#{enderecoUsuarioPessoaManagedBean.endereco.cidade}" id="txtCidade" readonly="true" />
+			</h:column>
+			
+			<h:column>
+				<h:outputLabel>UF</h:outputLabel>
+			</h:column>
+			<h:column>
+				<p:inputText value="#{enderecoUsuarioPessoaManagedBean.endereco.uf}" id="txtUf" readonly="true" />
+			</h:column>
+			
+			
+			
+			<h:column>
+				<h:outputLabel>Endereço Principal</h:outputLabel>
+			</h:column>
+			<h:column>
+		        <p:selectBooleanCheckbox value="#{enderecoUsuarioPessoaManagedBean.endereco.enderecoPrincipal}"/>
+				
+			</h:column>
+			
+		</p:panelGrid>
+		
+		<br />
+		
+ 
+		<p:commandButton value="Salvar" actionListener="#{enderecoUsuarioPessoaManagedBean.salvar}" ajax="false" />
+		<p:commandButton value="Novo" actionListener="#{enderecoUsuarioPessoaManagedBean.novo}" ajax="false" />
+		
+		<br/>
+		<br/>
+	</h:form>
+	
+	<h:form id="frmTable">
+		
+		<p:dataTable value="#{enderecoUsuarioPessoaManagedBean.usuario.enderecosUser}" var="endereco" border="2" cellpadding="6">
+		
+			<f:facet name="header">Lista de Telefones Endereços para #{enderecoUsuarioPessoaManagedBean.usuario.nome} #{enderecoUsuarioPessoaManagedBean.usuario.sobrenome}</f:facet>
+		
+			<p:column headerText="ID">
+				<h:outputLabel value="#{endereco.id}" />
+			</p:column>
+			
+			
+			<p:column headerText="CEP">
+				<h:outputLabel value="#{endereco.cep}" />
+			</p:column>
+			
+			<p:column headerText="Logradouro">
+				<h:outputLabel value="#{endereco.logradouro}" />
+			</p:column>
+			
+			<p:column headerText="Número">
+				<h:outputLabel value="#{endereco.numero}" />
+			</p:column>
+			
+			<p:column headerText="Bairro">
+				<h:outputLabel value="#{endereco.bairro}" />
+			</p:column>
+			
+			<p:column headerText="Cidade">
+				<h:outputLabel value="#{endereco.cidade}" />
+			</p:column>
+			
+			<p:column headerText="UF">
+				<h:outputLabel value="#{endereco.uf}" />
+			</p:column>
+			
+			
+			<p:column headerText="Endereço Principal">
+				<!-- <h:outputLabel value="#{endereco.enderecoPrincipal}" /> -->
+				<h:outputText rendered="#{endereco.enderecoPrincipal == true}" value="Sim" />
+				<h:outputText rendered="#{endereco.enderecoPrincipal == false}" value="Não" />
+			</p:column>
+			
+			<p:column headerText="Editar">
+				<h:commandLink title="Editar" immediate="true" id="btnEdit">
+				<h:graphicImage url="resources/img/user_edit.png" />
+					<f:setPropertyActionListener value="#{endereco}" target="#{enderecoUsuarioPessoaManagedBean.endereco}"/>
+					<f:ajax execute="btnEdit" render=":formulario"></f:ajax>
+				</h:commandLink>
+			</p:column>
+			
+			
+			<p:column headerText="Excluir">
+				<h:commandLink title="Excluir" action="#{enderecoUsuarioPessoaManagedBean.excluirEndereco}" immediate="true" id="btnDelete">
+				<h:graphicImage url="resources/img/user_delete.png" />
+					<f:setPropertyActionListener value="#{endereco}" target="#{enderecoUsuarioPessoaManagedBean.endereco}"/>
+					<!-- <f:ajax execute="btnDelete" render="@form :formulario:msg"></f:ajax> -->
+					<f:ajax execute="btnDelete" render="@form :formulario"></f:ajax>
+				</h:commandLink>
+			</p:column>
+			
+			
+			<f:facet name="footer">
+            	<span class="font-bold"> In total there are #{fn:length(enderecoUsuarioPessoaManagedBean.usuario.enderecosUser)} addresses.</span>
+        	</f:facet>
+		
+		</p:dataTable>
+		
+	</h:form>
+	
+</h:body>
+
+</html>

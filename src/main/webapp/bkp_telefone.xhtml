@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+<h:head>
+
+</h:head>
+
+<h:body>
+
+	<h:form>
+		<p:breadCrumb>
+			<p:menuitem />
+			<p:menuitem value="Página JSF" action="index.jsf" />
+			<p:menuitem value="Página PrimeFaces" action="primefaces.jsf" />
+		</p:breadCrumb>
+	</h:form>
+
+	<h1>Telefones</h1>
+	<h:form id="formulario">
+
+		<!-- <h:messages showDetail="true" showSummary="false" id="msg" /> -->
+		<p:messages autoUpdate="true" showDetail="true" />
+		<br/>
+		<br/>
+		
+		
+		<!-- <h:outputText value="#{telefoneUsuarioPessoaManagedBean.usuario.nome}" /> -->
+		<p:panelGrid columns="2">
+			<h:column>
+				<h:outputLabel>ID do Usuario</h:outputLabel>
+			</h:column>
+			<h:column>
+				<p:outputLabel readonly="true" value="#{telefoneUsuarioPessoaManagedBean.usuario.id}" />
+			</h:column>
+			
+			<h:column>
+				<h:outputLabel>Nome do Usuario</h:outputLabel>
+			</h:column>
+			<h:column>
+				<p:outputLabel value="#{telefoneUsuarioPessoaManagedBean.usuario.nome}" />
+				<p:outputLabel value=" " />
+				<p:outputLabel value="#{telefoneUsuarioPessoaManagedBean.usuario.sobrenome}" />
+			</h:column>
+			
+			
+			<h:column>
+				<h:outputLabel>ID</h:outputLabel>
+			</h:column>
+			<h:column>
+				<p:inputText value="#{telefoneUsuarioPessoaManagedBean.telefone.id}" readonly="true" />
+			</h:column>
+			
+			<h:column>
+				<h:outputLabel>Número</h:outputLabel>
+			</h:column>
+			<h:column>
+				<p:inputMask value="#{telefoneUsuarioPessoaManagedBean.telefone.numero}" mask="(99) 9 9999-9999" required="true" requiredMessage="Informe o número do telefone" />
+			</h:column>
+	
+			<h:column>
+				<h:outputLabel>Tipo</h:outputLabel>
+			</h:column>
+			<h:column>
+				<p:selectOneMenu value="#{telefoneUsuarioPessoaManagedBean.telefone.tipo}">
+		            <f:selectItem itemLabel="CELULAR" itemValue="CELULAR"/>
+		            <f:selectItem itemLabel="FIXO" itemValue="FIXO"/>
+	           	</p:selectOneMenu>
+			</h:column>
+           			
+		</p:panelGrid>
+		
+		<br />
+		<br />
+		
+		<p:commandButton value="Salvar" actionListener="#{telefoneUsuarioPessoaManagedBean.salvar}" ajax="false" />
+		<p:commandButton value="Novo" actionListener="#{telefoneUsuarioPessoaManagedBean.novo}" ajax="false" />
+		
+		<br/>
+		<br/>
+	</h:form>
+		
+	<h:form id="frmTable">
+		
+		<p:dataTable value="#{telefoneUsuarioPessoaManagedBean.usuario.telefonesUser}" var="phone">
+		
+			<f:facet name="header">Lista de Telefones Cadastrados para #{telefoneUsuarioPessoaManagedBean.usuario.nome} #{telefoneUsuarioPessoaManagedBean.usuario.sobrenome}</f:facet>
+		
+			<p:column headerText="ID">
+				<h:outputLabel value="#{phone.id}" />
+			</p:column>
+			<p:column headerText="Número">
+				<h:outputLabel value="#{phone.numero}" />
+			</p:column>
+			<p:column headerText="Tipo">
+				<h:outputLabel value="#{phone.tipo}" />
+			</p:column>
+			
+			<p:column headerText="Editar">
+				<h:commandLink title="Editar" immediate="true" id="btnEdit">
+				<h:graphicImage url="resources/img/user_edit.png" />
+					<f:setPropertyActionListener value="#{phone}" target="#{telefoneUsuarioPessoaManagedBean.telefone}"/>
+					<f:ajax execute="btnEdit" render=":formulario"></f:ajax>
+				</h:commandLink>
+			</p:column>
+			
+			
+			<p:column headerText="Excluir">
+				<h:commandLink title="Excluir" action="#{telefoneUsuarioPessoaManagedBean.excluirTelefone}" immediate="true" id="btnDelete">
+				<h:graphicImage url="resources/img/user_delete.png" />
+					<f:setPropertyActionListener value="#{phone}" target="#{telefoneUsuarioPessoaManagedBean.telefone}"/>
+					<!-- <f:ajax execute="btnDelete" render="@form :formulario:msg"></f:ajax> -->
+					<f:ajax execute="btnDelete" render="@form :formulario"></f:ajax>
+				</h:commandLink>
+			</p:column>
+			
+			
+			<f:facet name="footer">
+            	<span class="font-bold"> In total there are #{fn:length(telefoneUsuarioPessoaManagedBean.usuario.telefonesUser)} phones.</span>
+        	</f:facet>
+		
+		</p:dataTable>
+		
+	</h:form>
+	
+
+</h:body>
+
+</html>

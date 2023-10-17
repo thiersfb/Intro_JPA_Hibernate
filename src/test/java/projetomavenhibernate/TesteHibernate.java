@@ -26,7 +26,7 @@ public class TesteHibernate {
 		pessoa.setSenha("userTeste");
 		pessoa.setNome("User");
 		pessoa.setSobrenome("Teste");
-		pessoa.setEmail("teste@teste.com");
+		//pessoa.setEmail("teste@teste.com");
 		
 		
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -69,7 +69,7 @@ public class TesteHibernate {
 		
 		pessoa.setNome("Nome atualizado hibernate");
 		pessoa.setSobrenome("Sobrenome atualizado hibernate");
-		pessoa.setEmail("teste@teste.com");
+		//pessoa.setEmail("teste@teste.com");
 		pessoa.setLogin("guest123");
 		pessoa.setSenha("guest456");
 
@@ -85,11 +85,15 @@ public class TesteHibernate {
 
 	@Test
 	public void testeDelete() {
-		
-		DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
-		
-		UsuarioPessoa pessoa = daoGeneric.pesquisar(6L, UsuarioPessoa.class);
-		daoGeneric.excluirPorId(pessoa);
+		try {
+			
+			DaoGeneric<UsuarioPessoa> daoGeneric = new DaoGeneric<UsuarioPessoa>();
+			
+			UsuarioPessoa pessoa = daoGeneric.pesquisar(6L, UsuarioPessoa.class);
+			daoGeneric.excluirPorId(pessoa);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 	}
 
